@@ -17,6 +17,7 @@ const port = process.env.PORT || 5000;
 // middlewares
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public/build"));
 
 // db config
 connectDB();
@@ -89,17 +90,3 @@ io.on("connection", (socket) =>
         socket.leave(userData._id);
     });
 });
-
-// --------------------------deployment------------------------------
-
-
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("public/build"));
-} else {
-    app.get("/", (req, res) =>
-    {
-        res.send("API is running..");
-    });
-}
-
-// --------------------------deployment------------------------------
